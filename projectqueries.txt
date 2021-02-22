@@ -1,0 +1,47 @@
+مالك أحمد محمد الغامدي - 436034600 - Malik Alghamdi
+
+
+--What is the percentage of male to female drivers involved in the accidents?
+
+			select distinct((select count(accident_index) from veh where sex_of_driver = 1)/
+			(select count(accident_index) from veh where sex_of_driver=2)) *100 from dual;
+
+			select distinct((select count(accident_index) from veh where sex_of_driver = (select code from SexOfDriver where label =male)/
+			(select count(accident_index) from veh where sex_of_driver = (select code from SexOfDriver where label =female)) *100 from dual;
+
+	/*NOTE: on the first querey we assume we have the guidebook handy, and on the second we assume we have the saftey guide in my databse*/
+	
+
+--Generate a report showing the number of accidents grouped by driver age, what driver’s age recorded max number of accidents?
+
+			select count(accident_index) "number of accidents", age_of_driver from veh
+			where age_of_driver != -1
+			group by age_of_driver
+			order by number of accidents desc;
+			
+	/*Age with recorded max number of accidents: 30 Years old with 7042 accidents.*/
+	
+			select number_of_accidents, Age from (
+			select count(accident_index) as number_of_accidents, age_of_driver as Age from veh group by age_of_driver )
+	        where number_of_accidents in(select max(number_of_accidents)
+			from (select count(accident_index) as number_of_accidents, age_of_driver as Age from veh
+			where age_of_driver != -1
+			group by age_of_driver));
+	
+	/*This above querey shows only the top row of the report*/
+	
+--How many accidents happened within 10 miles of a point in “Victoria Road” in London?
+
+			select count(Accident_Index) from acc where latitude BETWEEN
+			(select latitude from ukpostcodes where postcode in('W8 5RF'))-0.14 AND 
+		    (select latitude from ukpostcodes where postcode in('W8 5RF'))+0.14
+ AND longitude BETWEEN
+			(select longitude from ukpostcodes where postcode in('W8 5RF'))-0.14 AND
+			(select longitude from ukpostcodes where postcode in('W8 5RF'))+0.14;
+			
+	/*16789 Accidents					
+	/*69 miles ~=1 degree of latitude OR longitude
+	10 miles ~=0.14 degree of latitude 
+    victoria road post code = W8 5RF
+	Source: https://www.thoughtco.com/degree-of-latitude-and-longitude-distance-4070616	*/	
+		

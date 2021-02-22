@@ -1,0 +1,46 @@
+لسؤال 1 (10 نقاط) لم يتم حفظ سؤال 1
+This project can be done in groups of 2-5 students.
+
+Consider the data sources:
+
+-      https://www.freemaptools.com/download/full-postcodes/ukpostcodes.zip
+-      http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/dftRoadSafetyData_Accidents_2017.zip
+-      http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/dftRoadSafetyData_Casualties_2017.zip
+-      http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/dftRoadSafetyData_Vehicles_2017.zip
+ 
+
+Data in 1 represents UK postal code, while data in 2,3,4 are related to accidents, casualties, and vehicle details for accidents happened in UK during year 2017.
+
+Supporting data can be found at:
+
+http://data.dft.gov.uk/road-accidents-safety-data/Road-Accident-Safety-Data-Guide.xls
+
+ 
+
+Write SQL to answer the followin-g:
+
+--What is the percentage of male to female drivers involved in the accidents?
+			select (select * from drivers where sex_of_driver = 1)/(select * from drivers where sex_of_driver=2) from dual;
+
+--Generate a report showing the number of accidents grouped by driver age, what driver’s age recorded max number of accidents?
+
+--How many accidents happened within 10 miles of a point in “Victoria Road” in London?
+			
+			
+			69 miles =1 degree of latitude  
+			10 miles =0.14 degree of latitude 
+			
+		victoria road post code = W8 5RF
+		select latitude from ukpostcodes where postcode in(W8 5RF);
+		select count(Accident_Index) from acc where latitude between (select latitude from ukpostcodes where postcode in(W8 5RF)-0.14, 
+		select latitude from ukpostcodes where postcode in(W8 5RF)+0.14);
+			
+
+submission should be done by sending a txt file contains the following to bykazemi@uqu.edu.sa :
+
+- group names and ids
+
+- answers to the questions.
+
+
+deadline is 25/11/2018 before 11:00 PM. ( any submission after that time will be deleted).
